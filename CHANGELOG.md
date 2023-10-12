@@ -1,5 +1,11 @@
 # @enalmada/storybook-addon-mock-urql
 
+## 0.0.2
+
+### Patch Changes
+
+- b29e468: yoga
+
 ## 0.0.5
 
 ### Patch Changes
