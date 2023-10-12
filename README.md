@@ -1,47 +1,80 @@
-# npm-module-template
+# next-gql
 
-## What
-* [bun](https://bun.sh/docs/bundler) build - with types the best I could (see build notes below)
-* [eslint](https://eslint.org/) with [prettier](https://prettier.io/) formatting
-* [fixpack](https://www.npmjs.com/package/fixpack) to normalize package.json changes along with `npm pkg fix`
-* [husky](https://typicode.github.io/husky/) pre commit hooks
-* [changesets](https://github.com/changesets/changesets) change and release workflow
+Graphql is the gold standard for client server communication, yet it is a significant investment in connecting technologies.
+This project aims to:
+* provide sensible defaults and opinions of how to start
+* allow access to underlying technologies so there is no lock in
+
+## Technology
+* [yoga](https://the-guild.dev/graphql/yoga-server) Graphql Server
 
 ## Installation
-Click the [Use this template](https://github.com/Enalmada/npm-module-template/generate) button to create a new repository 
-(or run `bun create Enalmada/npm-module-template <your-new-library-name>`)
+`bun install graphql next-gql`
 
-To switch existing repository 
-* `git remote add template https://github.com/Enalmada/npm-module-template`
-* `git fetch template`
-* `git merge template/main --allow-unrelated-histories`
-* resolve conflicts and merge
+## How to use
+### Server
 
-### Github settings
-* add NPM_TOKEN with access to deploy to npm to environment variables
-* Actions > General > Workflow Permissions
-  * Read and Write (to allow changesets to create changelog, and release)
-  * Allow github actions to create and approve PR
+1) initialize graphql server
+```ts
+// src/server/graphql/server.ts
+import User from "./UserType"
 
-## Workflow
-* install dependencies `bun install`
-  * Add any new dependencies manually to build.mjs external array so they don't get bundled (just referenced)
-* lint files `bun lint:fix`
-* run tests `bun run test` (not `bun test` as we are not using native tests)
-* run build `bun run build` (not `bun build` as we are using build script)
-* create changeset before PR `changeset` and choose appropriate semver and changelog
+export async function handleCreateOrGetUser(req: NextRequest): Promise<User | null> {
+    // function that takes in request and returns optional User
+}
 
+export interface MyContextType {
+  currentUser: User;
+}
+
+function logError(message: string) {
+  const log = new Logger();
+  log.error(message);
+  // TODO await seems to cause trouble for yoga
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  log.flush();
+}
+
+export function graphqlServer(graphqlEndpoint: string) {
+  return makeServer<User>({
+    schema,
+    graphqlEndpoint,
+    cors: {
+      origin: process.env.NEXT_PUBLIC_REDIRECT_URL,
+    },
+    handleCreateOrGetUser,
+    logError
+  });
+}
+```
+2) Use it in `/api/graphql` route
+```ts
+// src/app/api/route.ts
+import { type NextRequest } from 'next/server';
+import { graphqlServer } from '@/server/graphql/server';
+
+const { handleRequest } = graphqlServer('/api/graphql');
+
+export const GET = (request: NextRequest) => {
+  return handleRequest(request, { context: (request: NextRequest) => ({ request }) });
+};
+
+export const POST = (request: NextRequest) => {
+  return handleRequest(request, { context: (request: NextRequest) => ({ request }) });
+};
+
+```
 ### TODO
-- [ ] tests framework to bun (when bun supports mocking modules)
+## Client
+- [ ] urql wrappers
+- [ ] codegen bundling
+## Server
+- [ ] graphql interface with pothos
 
-### inspiration
-* [bun-lib-starter](https://github.com/wobsoriano/bun-lib-starter)
 
-## Notes
-### Build
-* Using [latest module and target settings](https://stackoverflow.com/questions/72380007/what-typescript-configuration-produces-output-closest-to-node-js-18-capabilities/72380008#72380008) for current LTS
-* using tsc for types until [bun support](https://github.com/oven-sh/bun/issues/5141#issuecomment-1727578701) comes around
+### Alternatives
+* [Server Actions](https://codesandbox.io/p/sandbox/next-js-server-actions-prisma-postgres-demo-2fdv7l?file=%2Fapp%2Factions.ts%3A1%2C1) - really cool how you can skip api layer.
+* [tRPC](https://trpc.io/) - t3 stack is a great starting point.  Consider up front eventual need for real api for mobile, etc.
 
 ## Contribute
 Using [changesets](https://github.com/changesets/changesets) so please remember to run "changeset" with any PR that might be interesting to people on an older template.
-Although this isn't being deployed as a module, I would like to call out things worth keeping in sync.
