@@ -6,7 +6,8 @@
     "**/*.mjs",
     "**/*.cjs",
     ".lintstagedrc.js",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "build.ts"
   ],
   "compilerOptions": {
     "noEmit": true,

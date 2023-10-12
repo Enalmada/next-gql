@@ -2,7 +2,7 @@
   "name": "@enalmada/next-gql",
   "version": "0.0.2",
   "scripts": {
-    "build": "rm -rf dist && bun build.mjs && bun run build:declaration",
+    "build": "rm -rf dist && bun build.ts && bun run build:declaration",
     "build:declaration": "tsc --emitDeclarationOnly",
     "build:pack": "bun run build && npm pack",
     "lint": "eslint . --ext .ts,.tsx,.cjs,.mjs && bun type-check",
@@ -60,9 +60,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "exports": {
     ".": "./dist/index.js",
     "./server": "./dist/server/index.js"
-  },
-  "type": "module"
+  }
 }
