@@ -1,8 +1,8 @@
 // serverrver/yoga.ts
-import {useGenericAuth} from "@envelop/generic-auth";
+import {useGenericAuth as serverUseGenericAuth} from "@envelop/generic-auth";
 import {EnvelopArmorPlugin} from "@escape.tech/graphql-armor";
-import {useAPQ} from "@graphql-yoga/plugin-apq";
-import {useCSRFPrevention} from "@graphql-yoga/plugin-csrf-prevention";
+import {useAPQ as serverUseAPQ} from "@graphql-yoga/plugin-apq";
+import {useCSRFPrevention as serverUseCSRFPrevention} from "@graphql-yoga/plugin-csrf-prevention";
 import {GraphQLError} from "graphql";
 import {
 createYoga,
@@ -11,10 +11,10 @@ maskError
 function makeServer(config) {
   const { handleCreateOrGetUser, logError, ...yogaOptions } = config;
   const defaultPlugins = [
-    useCSRFPrevention({
+    serverUseCSRFPrevention({
       requestHeaders: ["x-graphql-csrf"]
     }),
-    useGenericAuth({
+    serverUseGenericAuth({
       mode: "resolve-only",
       async resolveUserFn(context) {
         if (handleCreateOrGetUser) {
@@ -24,7 +24,7 @@ function makeServer(config) {
       }
     }),
     EnvelopArmorPlugin(),
-    useAPQ()
+    serverUseAPQ()
   ];
   return createYoga({
     plugins: defaultPlugins,
