@@ -7,7 +7,8 @@
     "**/*.cjs",
     ".lintstagedrc.js",
     "vitest.config.ts",
-    "build.ts"
+    "build.ts",
+    "prependClientDirective.ts"
   ],
   "compilerOptions": {
     "noEmit": true,

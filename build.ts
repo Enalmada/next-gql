@@ -1,4 +1,7 @@
+/// <reference types="bun-types" />
+
 import packageJson from './package.json';
+import { prependDirectiveToBuiltFiles } from './prependClientDirective';
 
 function getExternalsFromPackageJson(): string[] {
   const sections: (keyof typeof packageJson)[] = [
@@ -21,6 +24,23 @@ function getExternalsFromPackageJson(): string[] {
 async function buildWithExternals(): Promise<void> {
   const externalDeps = getExternalsFromPackageJson();
 
+  // TODO figure out way of getting 'use client' into NextGqlProvider.js build
+
+  await Bun.build({
+    entrypoints: [
+      './src/client/urql/index.ts',
+      './src/client/urql/UrqlWrapper.tsx',
+      './src/client/urql/cacheExchange.ts',
+    ],
+    outdir: './dist/client',
+    target: 'node',
+    external: [...externalDeps, './src/client/urql/UrqlWrapper', './src/client/urql/cacheExchange'],
+    root: './src/client',
+  });
+
+  // Update the built files in './dist/client' after the build completes.
+  prependDirectiveToBuiltFiles('./src/client', './dist/client');
+
   await Bun.build({
     entrypoints: ['./src/server/index.ts'],
     outdir: './dist',
@@ -30,4 +50,4 @@ async function buildWithExternals(): Promise<void> {
   });
 }
 
-buildWithExternals();
+void buildWithExternals();

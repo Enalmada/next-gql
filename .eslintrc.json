@@ -13,11 +13,13 @@
   "parserOptions": {
     "project": "./tsconfig.eslint.json"
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint", "prettier", "react-hooks"],
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "rules": {
     "prettier/prettier": "error",
@@ -43,5 +45,10 @@
     "browser": true,
     "es6": true,
     "node": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

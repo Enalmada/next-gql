@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { type NextRequest } from 'next/server';
-import { useGenericAuth } from '@envelop/generic-auth';
+import { useGenericAuth as serverUseGenericAuth } from '@envelop/generic-auth';
 import { EnvelopArmorPlugin } from '@escape.tech/graphql-armor';
-import { useAPQ } from '@graphql-yoga/plugin-apq';
-import { useCSRFPrevention } from '@graphql-yoga/plugin-csrf-prevention';
+import { useAPQ as serverUseAPQ } from '@graphql-yoga/plugin-apq';
+import { useCSRFPrevention as serverUseCSRFPrevention } from '@graphql-yoga/plugin-csrf-prevention';
 import { GraphQLError } from 'graphql';
 import {
   createYoga,
@@ -18,7 +17,7 @@ import {
 
 export interface YogaConfiguration<TUser> extends YogaServerOptions<any, any> {
   logError?: (message: string) => void;
-  handleCreateOrGetUser?: (req: NextRequest) => Promise<TUser | null>;
+  handleCreateOrGetUser?: (req: Request) => Promise<TUser | null>;
 }
 
 export function makeServer<TUser = unknown>(
@@ -27,20 +26,20 @@ export function makeServer<TUser = unknown>(
   const { handleCreateOrGetUser, logError, ...yogaOptions } = config;
 
   const defaultPlugins: Array<Plugin<any, any, any>> = [
-    useCSRFPrevention({
+    serverUseCSRFPrevention({
       requestHeaders: ['x-graphql-csrf'],
     }),
-    useGenericAuth({
+    serverUseGenericAuth({
       mode: 'resolve-only',
       async resolveUserFn(context: YogaInitialContext): Promise<TUser | null> {
         if (handleCreateOrGetUser) {
-          return handleCreateOrGetUser(context.request as NextRequest);
+          return handleCreateOrGetUser(context.request);
         }
         throw new Error('No user resolution handler provided.');
       },
     }),
     EnvelopArmorPlugin(),
-    useAPQ(),
+    serverUseAPQ(),
   ];
 
   // Next.js Custom Route Handler: https://nextjs.org/docs/app/building-your-application/routing/router-handlers
@@ -50,7 +49,7 @@ export function makeServer<TUser = unknown>(
     plugins: defaultPlugins, // Yoga needs to know how to create a valid Next response
     batching: true,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    context: ({ request }: { request: NextRequest }) => {},
+    context: ({ request }: { request: Request }) => {},
     // Although gql spec says everything should be 200, mapping some to semantic HTTP error codes
     // https://escape.tech/blog/graphql-errors-the-good-the-bad-and-the-ugly/
     fetchAPI: { Response },
