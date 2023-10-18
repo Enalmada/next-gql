@@ -1,5 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-argument */
+import { gql as originalGql } from '@urql/core';
 
+const gql = originalGql;
+
+export { gql };
+
+/*
+/!* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-argument *!/
+// Although docs imply to use `@urql/next`, `@urql/core` in necessary for
+// the way the yoga tests are currently written.  Will error getting query in vite without this.
 import { gql as originalGql, type AnyVariables, type TypedDocumentNode } from '@urql/core';
 import { type DocumentNode } from 'graphql';
 
@@ -21,3 +29,4 @@ function gql<Data = any, Variables extends AnyVariables = AnyVariables>(
 }
 
 export { gql };
+*/

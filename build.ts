@@ -29,6 +29,7 @@ async function buildWithExternals(): Promise<void> {
   await Bun.build({
     entrypoints: [
       './src/client/urql/index.ts',
+      './src/client/urql/gql.ts',
       './src/client/urql/UrqlWrapper.tsx',
       './src/client/urql/cacheExchange.ts',
     ],

@@ -76,7 +76,7 @@ for any configuration options desired beyond the defaults.
 1. Define client query
 ```ts
 // @/client/gql/queries-mutations
-import { gql } from '@enalmada/next-gql/client';
+import { gql } from '@urql/core';
 
 export const MY_TASKS = gql`
   query MyTasks {
@@ -178,6 +178,7 @@ Notes:
 #### Client
 - [ ] improve imports so they don't refer to UrqlWrapper (temp fix to get 'use client' to work)
 - [ ] codegen bundling
+- [ ] figure out how to export gql tag correctly
 #### Server
 - [ ] graphql interface with pothos
 #### Build

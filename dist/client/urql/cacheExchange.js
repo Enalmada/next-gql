@@ -1,6 +1,6 @@
 'use client';
 
-// urqlclient/urql/gql.tsxchange.ts
+// urqlclient/urql/cacheExchange.ts
 import {
 cacheExchange
 } from "@urql/exchange-graphcache";
