@@ -1,32 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /// <reference types="bun-types" />
 
-import packageJson from './package.json';
+import getExternalDependencies, { bunBuild } from '@enalmada/bun-externals';
+
 import { prependDirectiveToBuiltFiles } from './prependClientDirective';
 
-function getExternalsFromPackageJson(): string[] {
-  const sections: (keyof typeof packageJson)[] = [
-    'dependencies',
-    'devDependencies',
-    'peerDependencies',
-  ];
-  const externals: string[] = [];
-
-  for (const section of sections) {
-    if (packageJson[section]) {
-      externals.push(...Object.keys(packageJson[section]));
-    }
-  }
-
-  // Removing potential duplicates between dev and peer
-  return Array.from(new Set(externals));
-}
-
 async function buildWithExternals(): Promise<void> {
-  const externalDeps = getExternalsFromPackageJson();
+  const externalDeps = await getExternalDependencies();
 
-  // TODO figure out way of getting 'use client' into NextGqlProvider.js build
-
-  await Bun.build({
+  await bunBuild({
     entrypoints: [
       './src/client/urql/index.ts',
       './src/client/urql/gql.ts',
@@ -42,7 +25,7 @@ async function buildWithExternals(): Promise<void> {
   // Update the built files in './dist/client' after the build completes.
   prependDirectiveToBuiltFiles('./src/client', './dist/client');
 
-  await Bun.build({
+  await bunBuild({
     entrypoints: ['./src/server/index.ts'],
     outdir: './dist',
     target: 'node',
