@@ -1,6 +1,6 @@
 'use client';
 
-// urqlclient/urql/gql.tsxchange.t
+// urqlclient/urql/cacheExchange.t
 import React, {useMemo} from "react";
 import {authExchange} from "@urql/exchange-auth";
 import {

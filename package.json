@@ -75,6 +75,7 @@
     ".": "./dist/index.js",
     "./server": "./dist/server/index.js",
     "./client": "./dist/client/urql/index.js",
+    "./client/urql/gql": "./dist/client/urql/gql.js",
     "./client/urql/UrqlWrapper": "./dist/client/urql/UrqlWrapper.js",
     "./client/urql/cacheExchange": "./dist/client/urql/cacheExchange.js"
   }
