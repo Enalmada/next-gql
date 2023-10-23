@@ -23,7 +23,7 @@
     "@urql/exchange-auth": "^2.1.6",
     "@urql/exchange-graphcache": "^6.3.3",
     "@urql/exchange-persisted": "^4.1.0",
-    "@urql/next": "1.0.0",
+    "@urql/next": "1.1.0",
     "graphql-yoga": "^5.0.0",
     "urql": "^4.0.5"
   },
