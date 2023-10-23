@@ -16,6 +16,7 @@ function UrqlWrapper(props) {
     isLoggedIn,
     cookie,
     cacheExchange: cacheExchangeManual,
+    nonce,
     children,
     ...clientOptions
   } = props;
@@ -43,7 +44,8 @@ function UrqlWrapper(props) {
   }, [isLoggedIn]);
   return React.createElement(UrqlProvider, {
     client,
-    ssr
+    ssr,
+    nonce
   }, children);
 }
 var createAuth = (cookie) => {

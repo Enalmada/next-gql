@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-return */
 'use client';
 
-import { type Exchange } from '@urql/core';
 import {
   cacheExchange,
   type Cache,
   type CacheExchangeOpts,
   type Data,
 } from '@urql/exchange-graphcache';
+import { type Exchange } from '@urql/next';
 import { type IntrospectionObjectType } from 'graphql/utilities';
 
 // Urql will console warn this for any entities that don't return id:
@@ -59,4 +59,4 @@ export function createCacheExchange(options: CacheExchangeOptions): Exchange {
   });
 }
 
-export { type Cache, type Exchange };
+export { type Cache };

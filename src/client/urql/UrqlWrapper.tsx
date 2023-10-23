@@ -22,6 +22,7 @@ interface UrqlWrapperProps extends Partial<ClientOptions> {
   cookie?: string | null;
   children: ReactNode;
   cacheExchange?: Exchange;
+  nonce?: string;
 }
 
 const createAuth = (cookie: string | null | undefined): Exchange => {
@@ -54,6 +55,7 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
     isLoggedIn,
     cookie,
     cacheExchange: cacheExchangeManual,
+    nonce,
     children,
     ...clientOptions
   } = props;
@@ -98,7 +100,7 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
   }, [isLoggedIn]);
 
   return (
-    <UrqlProvider client={client} ssr={ssr}>
+    <UrqlProvider client={client} ssr={ssr} nonce={nonce}>
       {children}
     </UrqlProvider>
   );
