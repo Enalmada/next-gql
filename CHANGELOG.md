@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.0.5
+
+### Patch Changes
+
+- f98b7a8: nonce props
+
 ## 0.0.4
 
 ### Patch Changes
