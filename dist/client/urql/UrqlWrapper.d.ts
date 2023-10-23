@@ -6,6 +6,7 @@ interface UrqlWrapperProps extends Partial<ClientOptions> {
     cookie?: string | null;
     children: ReactNode;
     cacheExchange?: Exchange;
+    nonce?: string;
 }
 export declare function UrqlWrapper(props: UrqlWrapperProps): React.JSX.Element;
 export {};
