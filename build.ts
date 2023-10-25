@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /// <reference types="bun-types" />
-
 import getExternalDependencies, { bunBuild } from '@enalmada/bun-externals';
 
 import { prependDirectiveToBuiltFiles } from './prependClientDirective';
@@ -31,6 +30,14 @@ async function buildWithExternals(): Promise<void> {
     target: 'node',
     external: externalDeps,
     root: './src',
+  });
+
+  await bunBuild({
+    entrypoints: ['./src/server/pothos/helpers.ts'],
+    outdir: './dist/server/pothos',
+    target: 'node',
+    external: externalDeps,
+    root: './src/server/pothos',
   });
 }
 

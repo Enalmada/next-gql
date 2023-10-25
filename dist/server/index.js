@@ -1,4 +1,22 @@
-// serverrver/yoga.ts
+// serverrver/yoga/yoga.tsrs.ts
+import WithInputPlugin from "@pothos/plugin-with-input";
+import {DateTimeResolver, JSONResolver, NonEmptyStringResolver} from "graphql-scalars";
+function initializeBuilder(builder) {
+  builder.addScalarType("DateTime", DateTimeResolver, {});
+  builder.addScalarType("JSON", JSONResolver, {});
+  builder.addScalarType("NonEmptyString", NonEmptyStringResolver, {});
+  builder.queryType({
+    description: "The query root type."
+  });
+  builder.mutationType({
+    description: "The query mutation type."
+  });
+}
+var defaultBuilderOptions = {
+  plugins: [WithInputPlugin]
+};
+
+// serverrver/yoga/yoga.ts
 import {useGenericAuth as serverUseGenericAuth} from "@envelop/generic-auth";
 import {EnvelopArmorPlugin} from "@escape.tech/graphql-armor";
 import {useAPQ as serverUseAPQ} from "@graphql-yoga/plugin-apq";
@@ -80,5 +98,7 @@ function makeServer(config) {
   });
 }
 export {
-  makeServer
+  makeServer,
+  initializeBuilder,
+  defaultBuilderOptions
 };

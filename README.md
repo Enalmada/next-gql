@@ -14,7 +14,65 @@ This project aims to:
 `bun install graphql next-gql`
 
 ## How to use
-### Server
+
+### Schema Building
+
+Next-GQL provides helper functions for [Pothos](https://pothos-graphql.dev/).
+
+1) initialize schema builder
+```ts
+// server/graphql/builder.ts
+import { type User } from '@/server/db/schema';
+import { initializeBuilder, type DefaultScalars } from '@enalmada/next-gql/server';
+import SchemaBuilder from '@pothos/core';
+import WithInputPlugin from '@pothos/plugin-with-input';
+
+export interface MyContextType {
+  currentUser: User;
+}
+
+type DefaultUserSchemaTypes = DefaultScalars & { Context: MyContextType };
+
+export const builder = new SchemaBuilder<DefaultUserSchemaTypes>({ plugins: [WithInputPlugin] });
+
+initializeBuilder(builder);
+```
+
+2) use the builder to create client interfaces
+```ts
+// server/task/task.model.ts
+import { type Task, type TaskInput } from '@/server/db/schema';
+import { builder } from '@/server/graphql/builder';
+import TaskService, { type TasksInput } from '@/server/task/task.service';
+
+
+export const TaskType = builder.objectRef<Task>('Task');
+
+TaskType.implement({
+  fields: (t) => ({
+    id: t.exposeID('id'),
+    title: t.expose('title', {
+      type: 'NonEmptyString',
+    }),
+    ...
+  }),
+});
+
+builder.queryField('task', (t) =>
+  t.field({
+    type: TaskType,
+    args: {
+      id: t.arg.id({ required: true }),
+    },
+    nullable: true,
+    resolve: async (_root, args, ctx) => {
+      return new TaskService().task(ctx.currentUser, args.id as string, ctx);
+    },
+  })
+);
+```
+
+### Graphql Server
 
 Next-GQL provides a wrapper around [graphql yoga](https://the-guild.dev/graphql/yoga-server).  
 
@@ -69,7 +127,7 @@ export const POST = (request: NextRequest) => {
 };
 ```
 
-### Client
+### Graphql Client
 Next-gql provides urql wrapper with sane defaults and best practices. See [urql documentation](https://formidable.com/open-source/urql/)
 for any configuration options desired beyond the defaults.
 
@@ -175,12 +233,15 @@ Notes:
 * it is important to have a root `loading.tsx` which provides a final fallback suspense.  Without this, infinite querying can happen.
 
 ### TODO
-#### Client
+#### Graphql Client
 - [ ] improve imports so they don't refer to UrqlWrapper (temp fix to get 'use client' to work)
-- [ ] codegen bundling
 - [ ] figure out how to export gql tag correctly
-#### Server
-- [ ] graphql interface with pothos
+#### CodeGen
+- [ ] codegen bundling
+#### Graphql Server
+- [ ] consider making api endpoint automatic through middleware.
+#### Schema Builder
+- [ ] move SchemaBuilder and options to next-gql module (they have sideEffects)
 #### Build
 - [ ] replace manual 'use client' hack once bun plugins supports [`onEnd`](https://github.com/oven-sh/bun/issues/2771)
 
