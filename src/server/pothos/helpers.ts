@@ -5,20 +5,22 @@
 import WithInputPlugin from '@pothos/plugin-with-input';
 import { DateTimeResolver, JSONResolver, NonEmptyStringResolver } from 'graphql-scalars';
 
-/*
-export const createSchemaBuilder = <T extends Partial<PothosSchemaTypes.UserSchemaTypes>>(
-  options: any
-) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const builder = new SchemaBuilder<T>({
-    plugins: [WithInputPlugin],
-    ...options,
-  });
-
-  return builder;
-};
-
- */
+export interface DefaultScalars {
+  Scalars: {
+    DateTime: {
+      Input: Date;
+      Output: Date;
+    };
+    JSON: {
+      Input: unknown;
+      Output: unknown;
+    };
+    NonEmptyString: {
+      Input: string;
+      Output: string;
+    };
+  };
+}
 
 export const defaultBuilderOptions = {
   plugins: [WithInputPlugin],

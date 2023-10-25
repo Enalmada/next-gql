@@ -1,6 +1,6 @@
-import { defaultBuilderOptions, initializeBuilder } from './pothos/helpers';
+import { defaultBuilderOptions, DefaultScalars, initializeBuilder } from './pothos/helpers';
 import { makeServer, type YogaConfiguration } from './yoga/yoga';
 
 export { makeServer, type YogaConfiguration };
 
-export { defaultBuilderOptions, initializeBuilder };
+export { defaultBuilderOptions, DefaultScalars, initializeBuilder };
