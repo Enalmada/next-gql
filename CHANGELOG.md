@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.0.6
+
+### Patch Changes
+
+- efffa52: pothos
+
 ## 0.0.5
 
 ### Patch Changes
