@@ -7,7 +7,6 @@
     "build:pack": "bun run build && npm pack",
     "lint": "eslint . --ext .ts,.tsx,.cjs,.mjs && bun type-check",
     "lint:fix": "eslint . --fix --ext .ts,.tsx,.cjs,.mjs && bun type-check",
-    "release": "bun run build && bunx changeset publish",
     "test": "bun run test:unit",
     "test:unit": "cross-env NODE_ENV=test vitest",
     "type-check": "bun --bun tsc --noEmit"
