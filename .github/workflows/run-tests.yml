@@ -10,5 +10,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
+  tests-next-gql:
     uses: enalmada/.github/.github/workflows/run-tests.yml@main
+    with:
+      working-directory: 'packages/next-gql'
+
+  tests-next-gql-codegen:
+    uses: enalmada/.github/.github/workflows/run-tests.yml@main
+    with:
+      working-directory: 'packages/next-gql-codegen'
