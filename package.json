@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "precommit": "bun lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "bunx changeset publish"
   },
   "dependencies": {},
   "devDependencies": {
