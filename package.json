@@ -1,35 +1,11 @@
 {
-  "name": "@enalmada/next-gql",
-  "version": "0.0.6",
+  "name": "next-gql-root",
+  "version": "0.0.0",
   "scripts": {
-    "build": "rm -rf dist && bun build.ts && bun run build:declaration",
-    "build:declaration": "tsc --emitDeclarationOnly",
-    "build:pack": "bun run build && npm pack",
-    "lint": "eslint . --ext .ts,.tsx,.cjs,.mjs && bun type-check",
-    "lint:fix": "eslint . --fix --ext .ts,.tsx,.cjs,.mjs && bun type-check",
     "precommit": "bun lint-staged",
-    "prepare": "husky install",
-    "release": "bun run build && bunx changeset publish",
-    "test": "bun run test:unit",
-    "test:unit": "cross-env NODE_ENV=test vitest",
-    "type-check": "bun --bun tsc --noEmit"
+    "prepare": "husky install"
   },
-  "dependencies": {
-    "@envelop/generic-auth": "^7.0.0",
-    "@escape.tech/graphql-armor": "^2.3.1",
-    "@graphql-yoga/plugin-apq": "^3.0.0",
-    "@graphql-yoga/plugin-csrf-prevention": "^3.0.0",
-    "@pothos/core": "3.38.0",
-    "@pothos/plugin-with-input": "3.10.1",
-    "@urql/core": "^4.1.4",
-    "@urql/exchange-auth": "^2.1.6",
-    "@urql/exchange-graphcache": "^6.3.3",
-    "@urql/exchange-persisted": "^4.1.0",
-    "@urql/next": "1.1.0",
-    "graphql-scalars": "1.22.4",
-    "graphql-yoga": "^5.0.0",
-    "urql": "^4.0.5"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@changesets/cli": "2.26.2",
     "@enalmada/bun-externals": "0.0.3",
@@ -55,11 +31,8 @@
     "typescript": "5.2.2",
     "vitest": "0.34.6"
   },
-  "peerDependencies": {
-    "graphql": "^16.8.1",
-    "react": "^18.2.0"
-  },
-  "author": "",
+  "peerDependencies": {},
+  "author": "Adam Lane",
   "description": "",
   "keywords": [],
   "license": "MIT",
@@ -71,17 +44,9 @@
     "url": "git+https://github.com/Enalmada/next-gql.git"
   },
   "homepage": "https://github.com/Enalmada/next-gql",
-  "private": false,
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "type": "module",
-  "exports": {
-    ".": "./dist/index.js",
-    "./server": "./dist/server/index.js",
-    "./client": "./dist/client/urql/index.js",
-    "./client/urql/gql": "./dist/client/urql/gql.js",
-    "./client/urql/UrqlWrapper": "./dist/client/urql/UrqlWrapper.js",
-    "./client/urql/cacheExchange": "./dist/client/urql/cacheExchange.js"
-  }
+  "workspaces": [
+    "packages/*"
+  ]
 }

@@ -2,20 +2,22 @@
 
 Graphql is the gold standard for client server communication, yet it is a significant investment in connecting technologies.
 This project aims to:
-* provide sensible defaults and opinions for immediate production ready start
-* allow access to underlying technologies for advanced configuration (no lock in)
-* 
+* provide sensible defaults and opinions. Minimal dependencies and immediate production ready
+* allow access to underlying technologies for advanced configuration and no lock in
 
 ## Underlying Technology Stack
 * [yoga](https://the-guild.dev/graphql/yoga-server) Graphql Server
+* [Pothos](https://pothos-graphql.dev/) Graphql Code First API Builder
 * [urql](https://formidable.com/open-source/urql/) Graphql Client
+* [graphql-codegen](https://the-guild.dev/graphql/codegen) Client Schema Generation
 
 ## Installation
-`bun install graphql next-gql`
+`bun install graphql @enalmada/next-gql`
+`bun install -D @enalmada/next-gql-codegen`
 
 ## How to use
 
-### Schema Building
+### Graphql Code First API Builder
 
 Next-GQL provides helper functions for [Pothos](https://pothos-graphql.dev/).
 
@@ -38,7 +40,7 @@ export const builder = new SchemaBuilder<DefaultUserSchemaTypes>({ plugins: [Wit
 initializeBuilder(builder);
 ```
 
-2) use the builder to create client interfaces
+2) use the builder to create client types and then query/mutation interfaces
 ```ts
 // server/task/task.model.ts
 import { type Task, type TaskInput } from '@/server/db/schema';
@@ -86,10 +88,6 @@ export async function handleCreateOrGetUser(req: NextRequest): Promise<User | nu
     // function that takes in request and returns optional User
 }
 
-export interface MyContextType {
-  currentUser: User;
-}
-
 function logError(message: string) {
   const log = new Logger();
   log.error(message);
@@ -98,12 +96,16 @@ function logError(message: string) {
   log.flush();
 }
 
+export const baseURL = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : process.env.NEXT_PUBLIC_REDIRECT_URL || `http://localhost:${process.env.PORT || 3000}`;
+
 export function graphqlServer(graphqlEndpoint: string) {
   return makeServer<User>({
     schema,
     graphqlEndpoint,
     cors: {
-      origin: process.env.NEXT_PUBLIC_REDIRECT_URL,
+      origin: baseURL,
     },
     handleCreateOrGetUser,
     logError
@@ -128,8 +130,8 @@ export const POST = (request: NextRequest) => {
 ```
 
 ### Graphql Client
-Next-gql provides urql wrapper with sane defaults and best practices. See [urql documentation](https://formidable.com/open-source/urql/)
-for any configuration options desired beyond the defaults.
+
+Next-gql provides a wrapper around [urql](https://formidable.com/open-source/urql/).
 
 1. Define client query
 ```ts
@@ -232,16 +234,52 @@ Notes:
 * types are kept in sync with codegen
 * it is important to have a root `loading.tsx` which provides a final fallback suspense.  Without this, infinite querying can happen.
 
+### Client Schema Generation
+
+Next-gql provides wrapper around [graphql-codegen](https://the-guild.dev/graphql/codegen).
+Options to createCodegenConfig can override any graphql-codegen setting.
+
+1. create a `codegen.ts` file at root:
+```ts
+import createCodegenConfig from '@enalmada/next-gql-codegen';
+
+const config = createCodegenConfig();
+
+export default config;
+```
+2. create a script in package.json to run graphql-codegen-wrapper.
+```
+    "codegen": "bun graphql-codegen-wrapper --watch",
+```
+
+3. run concurrently with your dev server. 
+[start-server-and-test](https://www.npmjs.com/package/start-server-and-test) is one option to wait for server to be up 
+to collect current schema from.
+```
+    "dev": "start-server-and-test dev http-get://localhost:3000/api/graphql codegen",
+```
+
+Notice when queries and mutation change, client schema is updated.
+Default assumptions:
+* server url is http://localhost:3000/api/graphql
+* server relevant files: `src/server/graphql/(builder|schema).ts`, `src/server/**/*.model.ts`, 
+* query file `src/client/gql/queries-mutations.ts`
+* generated directory `src/client/gql/generated/`
+
+These can be overwritten with options and someday will be more specifically configurable.
+
 ### TODO
 #### Graphql Client
-- [ ] improve imports so they don't refer to UrqlWrapper (temp fix to get 'use client' to work)
-- [ ] figure out how to export gql tag correctly
-#### CodeGen
-- [ ] codegen bundling
+- [ ] next-gql server wrapper that handles cookies automatically
+- [ ] export gql tag so it doesn't need to be loaded from urql
+- [ ] persisted query hash passed to server
+#### Codegen
+- [ ] options override defaults more specifically/conveniently (don't need to replace everything) 
+- [ ] run automatically when next.js starts
 #### Graphql Server
-- [ ] consider making api endpoint automatic through middleware.
-#### Schema Builder
-- [ ] move SchemaBuilder and options to next-gql module (they have sideEffects)
+- [ ] default error logging to console
+#### API Builder
+- [ ] allow SchemaBuilder and options through next-gql module (they have sideEffects which may need pothos declaration)
 #### Build
 - [ ] replace manual 'use client' hack once bun plugins supports [`onEnd`](https://github.com/oven-sh/bun/issues/2771)
 
@@ -258,6 +296,9 @@ Notes:
 Using [changesets](https://github.com/changesets/changesets) so please remember to run "changeset" with any PR that might be interesting to people on an older template.
 
 ### Development Workflow
-Unfortunately bun link seems to have trouble with graphql.  This is the current workaround:
+Unfortunately bun link seems to have trouble with graphql and updating binaries.  This is the current workaround:
 In module, run 'bun lint:fix && bun run build:pack`
-In application, run 'bun uninstall @enalmada/next-gql && bun install file:<path>/next-gql/enalmada-next-gql-<version>.tgz'
+In application, run one of as applicable:
+* 'bun uninstall @enalmada/next-gql && bun install file:<path>/next-gql/packages/next-gql/enalmada-next-gql-<version>.tgz'
+* 'bun uninstall @enalmada/next-gql-codegen && bun install file:<path>/next-gql/packages/next-gql-codegen/enalmada-next-gql-codegen-<version>.tgz'
+

@@ -4,9 +4,18 @@ on:
   pull_request_target:
     paths:
       - '.github/workflows/changesets-renovate.yml'
-      - 'bun.lockb'
-      - 'package.json'
+      - 'packages/**/bun.lockb'
+      - 'packages/**/package.json'
 
 jobs:
-  generate-changeset:
+  generate-changeset-next-gql:
+    if: "contains(github.event.pull_request.head.ref, 'packages/next-gql/**')"
     uses: enalmada/.github/.github/workflows/changesets-renovate.yml@main
+    with:
+      working-directory: 'packages/next-gql'
+
+  generate-changeset-next-gql-codegen:
+    if: "contains(github.event.pull_request.head.ref, 'packages/next-gql-codegen/**')"
+    uses: enalmada/.github/.github/workflows/changesets-renovate.yml@main
+    with:
+      working-directory: 'packages/next-gql-codegen'

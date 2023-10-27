@@ -1,4 +1,4 @@
-node_modules
+**/node_modules
 .vscode
 yarn-error.log
 .yarn
@@ -7,5 +7,5 @@ yarn-error.log
 .env
 lib
 tmp
-package-lock.json
-*.tgz
+**/package-lock.json
+**/*.tgz

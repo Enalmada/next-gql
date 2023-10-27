@@ -1,19 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.mjs",
-    "**/*.cjs",
-    ".lintstagedrc.js",
-    "vitest.config.ts",
-    "build.ts",
-    "prependClientDirective.ts"
-  ],
   "compilerOptions": {
     "noEmit": true,
   },
-  "exclude": [
-    "dist", "node_modules"
-  ]
 }
