@@ -5,7 +5,7 @@ A collection of graphql best practices and sensible defaults.  The project goals
 * config options to underlying technologies (no lockin)
 
 ## Getting Started
-Read the documentation [website](https://next-gql.vercel.app/)
+Read the documentation [website](https://next-gql-tau.vercel.app/)
 
 ## Contribute
 Using [changesets](https://github.com/changesets/changesets) so please remember to run "changeset" with any PR that might be interesting to people on an older template.
