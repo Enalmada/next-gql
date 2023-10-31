@@ -2,6 +2,7 @@
   "name": "next-gql-root",
   "version": "0.0.0",
   "scripts": {
+    "dev:website": "cd website && bun run dev",
     "precommit": "bun lint-staged",
     "prepare": "husky install",
     "release": "bunx changeset publish"
@@ -33,6 +34,7 @@
     "vitest": "0.34.6"
   },
   "peerDependencies": {},
+  "main": "",
   "author": "Adam Lane",
   "description": "",
   "keywords": [],
