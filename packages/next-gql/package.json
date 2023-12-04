@@ -16,7 +16,7 @@
     "@escape.tech/graphql-armor": "^2.3.1",
     "@graphql-yoga/plugin-apq": "^3.0.0",
     "@graphql-yoga/plugin-csrf-prevention": "^3.0.0",
-    "@pothos/core": "3.38.0",
+    "@pothos/core": "3.39.0",
     "@pothos/plugin-with-input": "3.10.1",
     "@urql/core": "^4.1.4",
     "@urql/exchange-auth": "^2.1.6",
