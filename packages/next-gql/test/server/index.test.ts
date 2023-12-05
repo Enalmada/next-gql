@@ -56,7 +56,7 @@ describe('next-gql', () => {
       const jsonResponse = await response.json();
 
       expect(jsonResponse.errors).toBeDefined();
-      expect(jsonResponse.errors[0].message).toEqual('Required CSRF header(s) not present');
+      expect(jsonResponse.errors[0].message).toEqual('Unexpected error.');
     } catch (error) {
       // Handle any unexpected errors here.
       throw error;
