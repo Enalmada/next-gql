@@ -12,6 +12,10 @@ export interface DefaultScalars {
             Input: string;
             Output: string;
         };
+        File: {
+            Input: File;
+            Output: never;
+        };
     };
 }
 export declare const defaultBuilderOptions: {

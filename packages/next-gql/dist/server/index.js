@@ -5,6 +5,11 @@ function initializeBuilder(builder) {
   builder.addScalarType("DateTime", DateTimeResolver, {});
   builder.addScalarType("JSON", JSONResolver, {});
   builder.addScalarType("NonEmptyString", NonEmptyStringResolver, {});
+  builder.scalarType("File", {
+    serialize: () => {
+      throw new Error("Uploads can only be used as input types");
+    }
+  });
   builder.queryType({
     description: "The query root type."
   });
