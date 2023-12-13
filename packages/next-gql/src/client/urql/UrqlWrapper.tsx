@@ -67,8 +67,14 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
 
     const ssr = ssrExchange();
 
+    // https://the-guild.dev/graphql/sse/recipes#with-urql
+    // https://github.com/enisdenjo/graphql-sse/blob/master/PROTOCOL.md#distinct-connections-mode
     const sseClient = createSSEClient({
-      url: url + '/stream',
+      url: url,
+      headers: {
+        // https://the-guild.dev/graphql/yoga-server/docs/features/csrf-prevention
+        'x-graphql-csrf': 'true',
+      },
     });
 
     const client = createClient({

@@ -1,6 +1,6 @@
 'use client';
 
-// urqlclient/urql/cacheExchange.ts
+// urql./node_modules/graphql-sse/l
 import {
 cacheExchange
 } from "@urql/exchange-graphcache";
@@ -27,6 +27,7 @@ function createCacheExchange(options) {
     ...remainingOptions
   });
 }
+
 export {
   createCacheExchange
 };
