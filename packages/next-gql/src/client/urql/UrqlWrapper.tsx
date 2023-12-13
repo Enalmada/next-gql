@@ -7,12 +7,14 @@ import {
   createClient,
   fetchExchange,
   ssrExchange,
+  subscriptionExchange,
   UrqlProvider,
   type ClientOptions,
   type CombinedError,
   type Exchange,
   type Operation,
 } from '@urql/next';
+import { createClient as createSSEClient } from 'graphql-sse';
 
 // https://github.com/JoviDeCroock/urql/blob/next-13-package/examples/with-next/app/non-rsc/layout.tsx
 
@@ -65,6 +67,10 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
 
     const ssr = ssrExchange();
 
+    const sseClient = createSSEClient({
+      url: url + '/stream',
+    });
+
     const client = createClient({
       url,
       exchanges: [
@@ -81,6 +87,19 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
         }),
          */
         fetchExchange,
+        subscriptionExchange({
+          forwardSubscription(operation) {
+            return {
+              subscribe: (sink) => {
+                // @ts-expect-error Argument of type 'FetchBody' is not assignable to parameter of type 'RequestParams'
+                const dispose = sseClient.subscribe(operation, sink);
+                return {
+                  unsubscribe: dispose,
+                };
+              },
+            };
+          },
+        }),
       ],
       suspense: true,
       requestPolicy: 'cache-first',
