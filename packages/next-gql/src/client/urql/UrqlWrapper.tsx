@@ -1,20 +1,19 @@
 'use client';
 
 import React, { useMemo, type ReactNode } from 'react';
+import { yogaExchange } from '@graphql-yoga/urql-exchange';
 import { authExchange, type AuthUtilities } from '@urql/exchange-auth';
 import {
   cacheExchange,
   createClient,
   fetchExchange,
   ssrExchange,
-  subscriptionExchange,
   UrqlProvider,
   type ClientOptions,
   type CombinedError,
   type Exchange,
   type Operation,
 } from '@urql/next';
-import { createClient as createSSEClient } from 'graphql-sse';
 
 // https://github.com/JoviDeCroock/urql/blob/next-13-package/examples/with-next/app/non-rsc/layout.tsx
 
@@ -69,6 +68,7 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
 
     // https://the-guild.dev/graphql/sse/recipes#with-urql
     // https://github.com/enisdenjo/graphql-sse/blob/master/PROTOCOL.md#distinct-connections-mode
+    /*
     const sseClient = createSSEClient({
       url: url,
       headers: {
@@ -76,6 +76,8 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
         'x-graphql-csrf': 'true',
       },
     });
+
+     */
 
     const client = createClient({
       url,
@@ -93,6 +95,8 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
         }),
          */
         fetchExchange,
+        yogaExchange(),
+        /*
         subscriptionExchange({
           forwardSubscription(operation) {
             return {
@@ -106,6 +110,8 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
             };
           },
         }),
+        
+         */
       ],
       suspense: true,
       requestPolicy: 'cache-first',

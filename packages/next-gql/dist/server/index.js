@@ -26,13 +26,16 @@ import {useGenericAuth as serverUseGenericAuth} from "@envelop/generic-auth";
 import {EnvelopArmorPlugin} from "@escape.tech/graphql-armor";
 import {useAPQ as serverUseAPQ} from "@graphql-yoga/plugin-apq";
 import {useCSRFPrevention as serverUseCSRFPrevention} from "@graphql-yoga/plugin-csrf-prevention";
+import {initContextCache} from "@pothos/core";
 import {GraphQLError} from "graphql";
 import {
+createPubSub,
 createYoga,
 maskError
 } from "graphql-yoga";
 function makeServer(config) {
-  const { handleCreateOrGetUser, logError, ...yogaOptions } = config;
+  const { handleCreateOrGetUser, logError, pubSubOverride, pubSubConfig, ...yogaOptions } = config;
+  const pubSub = createPubSub(pubSubConfig);
   const defaultPlugins = [
     serverUseCSRFPrevention({
       requestHeaders: ["x-graphql-csrf"]
@@ -52,8 +55,10 @@ function makeServer(config) {
   return createYoga({
     plugins: defaultPlugins,
     batching: true,
-    context: ({ request }) => {
-    },
+    context: ({ request }) => ({
+      ...initContextCache(),
+      pubSub: pubSubOverride || pubSub
+    }),
     fetchAPI: { Response },
     ...yogaOptions,
     graphiql: {

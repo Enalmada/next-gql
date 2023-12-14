@@ -7,19 +7,15 @@
     "prepare": "husky install",
     "release": "bunx changeset publish"
   },
-  "dependencies": {
-    "graphql-sse": "^2.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@changesets/cli": "2.27.1",
-    "@enalmada/bun-externals": "0.0.3",
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@scaleway/changesets-renovate": "1.3.2",
     "@types/node": "20.10.4",
-    "@types/react": "18.2.43",
+    "@types/react": "18.2.45",
     "@typescript-eslint/eslint-plugin": "6.14.0",
     "@typescript-eslint/parser": "6.14.0",
-    "bun-types": "1.0.16",
     "cross-env": "7.0.3",
     "eslint": "8.55.0",
     "eslint-config-prettier": "9.1.0",
@@ -27,7 +23,6 @@
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "fixpack": "4.0.0",
-    "graphql": "16.8.1",
     "husky": "8.0.3",
     "lint-staged": "15.2.0",
     "prettier": "3.1.1",

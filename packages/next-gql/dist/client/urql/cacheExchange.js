@@ -1,6 +1,6 @@
 'use client';
 
-// urql./node_modules/graphql-sse/l
+// urqlclient/urql/cacheExchange.ts
 import {
 cacheExchange
 } from "@urql/exchange-graphcache";
