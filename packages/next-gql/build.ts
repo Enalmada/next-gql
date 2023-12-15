@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /// <reference types="bun-types" />
-import { bunBuild, getSourceFiles } from '@enalmada/bun-externals';
-
 import {
+  bunBuild,
+  getSourceFiles,
   prependDirectiveToBuiltFiles,
   removeBadClientStringFromFiles,
-} from './prependClientDirective';
+} from '@enalmada/bun-externals';
 
 async function buildWithExternals(): Promise<void> {
-  const entryPoints = await getSourceFiles();
+  const entrypoints = await getSourceFiles();
 
   await bunBuild({
-    entrypoints: entryPoints,
+    entrypoints,
     outdir: './dist',
     target: 'node',
     external: ['*'],
