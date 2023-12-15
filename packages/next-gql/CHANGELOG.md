@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.0.9
+
+### Patch Changes
+
+- 542ee3e: subscription support
+
 ## 0.0.8
 
 ### Patch Changes
