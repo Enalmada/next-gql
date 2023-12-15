@@ -19,5 +19,6 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-  }
+  },
+  "exclude": ["website"]
 }

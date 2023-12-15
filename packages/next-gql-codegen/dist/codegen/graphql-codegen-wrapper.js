@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// codegenegen/graphql-codegen-wrapper.ts
+// src/codegen/graphql-codegen-wrapper.ts
 import {execSync} from "child_process";
 import path from "path";
 var currentDir = path.dirname(new URL(import.meta.url).pathname);
