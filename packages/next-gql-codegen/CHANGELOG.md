@@ -1,5 +1,11 @@
 # @enalmada/next-gql-codegen
 
+## 0.0.5
+
+### Patch Changes
+
+- 563b761: build process tweak
+
 ## 0.0.4
 
 ### Patch Changes
