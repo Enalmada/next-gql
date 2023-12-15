@@ -1,23 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /// <reference types="bun-types" />
-import getExternalDependencies, { bunBuild } from '@enalmada/bun-externals';
+import { bunBuild, getSourceFiles } from '@enalmada/bun-externals';
 
 async function buildWithExternals(): Promise<void> {
-  const externalDeps = await getExternalDependencies();
+  const entrypoints = await getSourceFiles();
 
   await bunBuild({
-    entrypoints: ['./src/index.ts'],
+    entrypoints,
     outdir: './dist',
     target: 'node',
-    external: externalDeps,
-    root: './src',
-  });
-
-  await bunBuild({
-    entrypoints: ['./src/codegen/graphql-codegen-wrapper.ts'],
-    outdir: './dist',
-    target: 'node',
+    external: ['*'],
     root: './src',
   });
 }
