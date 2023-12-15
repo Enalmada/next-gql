@@ -27,6 +27,7 @@ function createCacheExchange(options) {
     ...remainingOptions
   });
 }
+
 export {
   createCacheExchange
 };

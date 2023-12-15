@@ -3,7 +3,10 @@
 /// <reference types="bun-types" />
 import getExternalDependencies, { bunBuild } from '@enalmada/bun-externals';
 
-import { prependDirectiveToBuiltFiles } from './prependClientDirective';
+import {
+  prependDirectiveToBuiltFiles,
+  removeBadClientStringFromFiles,
+} from './prependClientDirective';
 
 async function buildWithExternals(): Promise<void> {
   const externalDeps = await getExternalDependencies();
@@ -23,6 +26,7 @@ async function buildWithExternals(): Promise<void> {
 
   // Update the built files in './dist/client' after the build completes.
   prependDirectiveToBuiltFiles('./src/client', './dist/client');
+  removeBadClientStringFromFiles('./dist');
 
   await bunBuild({
     entrypoints: ['./src/server/index.ts'],

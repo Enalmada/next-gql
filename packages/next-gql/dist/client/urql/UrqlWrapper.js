@@ -2,6 +2,7 @@
 
 // urqlclient/urql/cacheExchange.t
 import React, {useMemo} from "react";
+import {yogaExchange} from "@graphql-yoga/urql-exchange";
 import {authExchange} from "@urql/exchange-auth";
 import {
 cacheExchange,
@@ -29,7 +30,8 @@ function UrqlWrapper(props) {
         cacheExchangeManual || cacheExchange,
         auth,
         ssr2,
-        fetchExchange
+        fetchExchange,
+        yogaExchange()
       ],
       suspense: true,
       requestPolicy: "cache-first",
@@ -48,6 +50,7 @@ function UrqlWrapper(props) {
     nonce
   }, children);
 }
+
 var createAuth = (cookie) => {
   return authExchange(async (utilities) => {
     return {

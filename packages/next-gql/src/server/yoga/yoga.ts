@@ -1,29 +1,52 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { useGenericAuth as serverUseGenericAuth } from '@envelop/generic-auth';
 import { EnvelopArmorPlugin } from '@escape.tech/graphql-armor';
 import { useAPQ as serverUseAPQ } from '@graphql-yoga/plugin-apq';
 import { useCSRFPrevention as serverUseCSRFPrevention } from '@graphql-yoga/plugin-csrf-prevention';
+import { type ChannelPubSubConfig } from '@graphql-yoga/subscription/typings/create-pub-sub';
+import { initContextCache } from '@pothos/core';
 import { GraphQLError } from 'graphql';
 import {
+  createPubSub,
   createYoga,
   maskError,
   type CORSOptions,
   type GraphiQLOptions,
   type Plugin,
+  type PubSub,
   type YogaInitialContext,
   type YogaServerInstance,
   type YogaServerOptions,
 } from 'graphql-yoga';
 
-export interface YogaConfiguration<TUser> extends YogaServerOptions<any, any> {
-  logError?: (message: string) => void;
-  handleCreateOrGetUser?: (req: Request) => Promise<TUser | null>;
+type PubSubPublishArgsByKey = {
+  [key: string]: [] | [any] | [number | string, any];
+};
+
+export interface YogaContext<TUser, TPubSubChannels extends PubSubPublishArgsByKey> {
+  currentUser: TUser;
+  pubSub: PubSub<TPubSubChannels>;
 }
 
-export function makeServer<TUser = unknown>(
-  config: YogaConfiguration<TUser>
-): YogaServerInstance<Record<string, any>, { currentUser: TUser }> {
-  const { handleCreateOrGetUser, logError, ...yogaOptions } = config;
+export interface YogaConfiguration<
+  TUser = unknown,
+  TPubSubChannels extends PubSubPublishArgsByKey = Record<string, never>,
+> extends YogaServerOptions<any, any> {
+  logError?: (message: string) => void;
+  handleCreateOrGetUser?: (req: Request) => Promise<TUser | null>;
+  pubSubOverride?: PubSub<TPubSubChannels>;
+  pubSubConfig?: ChannelPubSubConfig<TPubSubChannels> | undefined;
+}
+
+export function makeServer<
+  TUser,
+  TPubSubChannels extends PubSubPublishArgsByKey = Record<string, never>,
+>(
+  config: YogaConfiguration<TUser, TPubSubChannels>
+): YogaServerInstance<Record<string, any>, YogaContext<TUser, TPubSubChannels>> {
+  const { handleCreateOrGetUser, logError, pubSubOverride, pubSubConfig, ...yogaOptions } = config;
+
+  const pubSub = createPubSub<TPubSubChannels>(pubSubConfig);
 
   const defaultPlugins: Array<Plugin<any, any, any>> = [
     serverUseCSRFPrevention({
@@ -45,11 +68,17 @@ export function makeServer<TUser = unknown>(
   // Next.js Custom Route Handler: https://nextjs.org/docs/app/building-your-application/routing/router-handlers
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return createYoga<unknown, { currentUser: TUser }>({
+  return createYoga<unknown, YogaContext<TUser>>({
     plugins: defaultPlugins, // Yoga needs to know how to create a valid Next response
     batching: true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    context: ({ request }: { request: Request }) => {},
+    context: ({ request }: { request: Request }): Partial<YogaContext<TUser, TPubSubChannels>> => ({
+      // Adding this will prevent any issues if you server implementation
+      // copies or extends the context object before passing it to your resolvers
+      // https://pothos-graphql.dev/docs/guide/context#initialize-context-cache
+      ...initContextCache(),
+
+      pubSub: pubSubOverride || pubSub,
+    }),
     // Although gql spec says everything should be 200, mapping some to semantic HTTP error codes
     // https://escape.tech/blog/graphql-errors-the-good-the-bad-and-the-ugly/
     fetchAPI: { Response },

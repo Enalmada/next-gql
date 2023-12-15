@@ -42,4 +42,28 @@ function prependDirectiveToBuiltFiles(srcDirectory: string, buildDirectory: stri
   });
 }
 
-export { prependDirectiveToBuiltFiles };
+// Work around a bun bug with use client
+function removeBadClientStringFromFiles(dir: string) {
+  const targetString = '"use client";';
+
+  const files = fs.readdirSync(dir);
+
+  files.forEach((file) => {
+    const filePath = path.join(dir, file);
+    const stats = fs.statSync(filePath);
+
+    if (stats.isDirectory()) {
+      removeBadClientStringFromFiles(filePath); // Recursive call for directories
+    } else {
+      let content = fs.readFileSync(filePath, 'utf8');
+      if (content.includes(targetString)) {
+        content = content.replace(new RegExp(targetString, 'g'), '');
+        fs.writeFileSync(filePath, content, 'utf8');
+        // eslint-disable-next-line no-console
+        console.log(`Removed bad string from ${filePath}`);
+      }
+    }
+  });
+}
+
+export { prependDirectiveToBuiltFiles, removeBadClientStringFromFiles };

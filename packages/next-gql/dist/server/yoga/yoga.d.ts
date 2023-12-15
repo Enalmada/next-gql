@@ -1,8 +1,17 @@
-import { type YogaServerInstance, type YogaServerOptions } from 'graphql-yoga';
-export interface YogaConfiguration<TUser> extends YogaServerOptions<any, any> {
+import { type ChannelPubSubConfig } from '@graphql-yoga/subscription/typings/create-pub-sub';
+import { type PubSub, type YogaServerInstance, type YogaServerOptions } from 'graphql-yoga';
+type PubSubPublishArgsByKey = {
+    [key: string]: [] | [any] | [number | string, any];
+};
+export interface YogaContext<TUser, TPubSubChannels extends PubSubPublishArgsByKey> {
+    currentUser: TUser;
+    pubSub: PubSub<TPubSubChannels>;
+}
+export interface YogaConfiguration<TUser = unknown, TPubSubChannels extends PubSubPublishArgsByKey = Record<string, never>> extends YogaServerOptions<any, any> {
     logError?: (message: string) => void;
     handleCreateOrGetUser?: (req: Request) => Promise<TUser | null>;
+    pubSubOverride?: PubSub<TPubSubChannels>;
+    pubSubConfig?: ChannelPubSubConfig<TPubSubChannels> | undefined;
 }
-export declare function makeServer<TUser = unknown>(config: YogaConfiguration<TUser>): YogaServerInstance<Record<string, any>, {
-    currentUser: TUser;
-}>;
+export declare function makeServer<TUser, TPubSubChannels extends PubSubPublishArgsByKey = Record<string, never>>(config: YogaConfiguration<TUser, TPubSubChannels>): YogaServerInstance<Record<string, any>, YogaContext<TUser, TPubSubChannels>>;
+export {};

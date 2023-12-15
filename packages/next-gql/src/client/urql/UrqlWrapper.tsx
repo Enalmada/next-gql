@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo, type ReactNode } from 'react';
+import { yogaExchange } from '@graphql-yoga/urql-exchange';
 import { authExchange, type AuthUtilities } from '@urql/exchange-auth';
 import {
   cacheExchange,
@@ -65,6 +66,19 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
 
     const ssr = ssrExchange();
 
+    // https://the-guild.dev/graphql/sse/recipes#with-urql
+    // https://github.com/enisdenjo/graphql-sse/blob/master/PROTOCOL.md#distinct-connections-mode
+    /*
+    const sseClient = createSSEClient({
+      url: url,
+      headers: {
+        // https://the-guild.dev/graphql/yoga-server/docs/features/csrf-prevention
+        'x-graphql-csrf': 'true',
+      },
+    });
+
+     */
+
     const client = createClient({
       url,
       exchanges: [
@@ -81,6 +95,23 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
         }),
          */
         fetchExchange,
+        yogaExchange(),
+        /*
+        subscriptionExchange({
+          forwardSubscription(operation) {
+            return {
+              subscribe: (sink) => {
+                // @ts-expect-error Argument of type 'FetchBody' is not assignable to parameter of type 'RequestParams'
+                const dispose = sseClient.subscribe(operation, sink);
+                return {
+                  unsubscribe: dispose,
+                };
+              },
+            };
+          },
+        }),
+        
+         */
       ],
       suspense: true,
       requestPolicy: 'cache-first',
