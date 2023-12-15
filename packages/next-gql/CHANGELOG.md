@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.0.10
+
+### Patch Changes
+
+- 563b761: build process tweak
+
 ## 0.0.9
 
 ### Patch Changes
