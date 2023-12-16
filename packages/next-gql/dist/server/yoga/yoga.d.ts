@@ -4,7 +4,7 @@ type PubSubPublishArgsByKey = {
     [key: string]: [] | [any] | [number | string, any];
 };
 export interface YogaContext<TUser, TPubSubChannels extends PubSubPublishArgsByKey> {
-    currentUser: TUser;
+    currentUser?: TUser;
     pubSub: PubSub<TPubSubChannels>;
 }
 export interface YogaConfiguration<TUser = unknown, TPubSubChannels extends PubSubPublishArgsByKey = Record<string, never>> extends YogaServerOptions<any, any> {
