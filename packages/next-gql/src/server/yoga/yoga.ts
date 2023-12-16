@@ -24,7 +24,7 @@ type PubSubPublishArgsByKey = {
 };
 
 export interface YogaContext<TUser, TPubSubChannels extends PubSubPublishArgsByKey> {
-  currentUser: TUser;
+  currentUser?: TUser;
   pubSub: PubSub<TPubSubChannels>;
 }
 
