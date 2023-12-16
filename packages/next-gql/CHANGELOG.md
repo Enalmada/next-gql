@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.0.11
+
+### Patch Changes
+
+- 317fc4d: currentUser is optional
+
 ## 0.0.10
 
 ### Patch Changes
