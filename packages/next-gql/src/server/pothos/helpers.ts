@@ -50,6 +50,10 @@ export function initializeBuilder(
   builder.mutationType({
     description: 'The query mutation type.',
   });
+
+  builder.subscriptionType({
+    description: 'The query subscription type.',
+  });
 }
 
 // Complexity taken care of by armor. Use here if not there

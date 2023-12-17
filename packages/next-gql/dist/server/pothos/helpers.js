@@ -16,6 +16,9 @@ function initializeBuilder(builder) {
   builder.mutationType({
     description: "The query mutation type."
   });
+  builder.subscriptionType({
+    description: "The query subscription type."
+  });
 }
 var defaultBuilderOptions = {
   plugins: [WithInputPlugin]
