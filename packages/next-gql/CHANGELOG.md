@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.0.12
+
+### Patch Changes
+
+- ed605aa: root subscription type
+
 ## 0.0.11
 
 ### Patch Changes
