@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/// <reference types="bun-types" />
 import {
   bunBuild,
   getSourceFiles,
