@@ -1,5 +1,11 @@
 # @enalmada/next-gql-codegen
 
+## 0.1.0
+
+### Minor Changes
+
+- 8005a9e: codegen support \*.gql.ts
+
 ## 0.0.5
 
 ### Patch Changes
