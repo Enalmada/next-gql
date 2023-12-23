@@ -13,7 +13,7 @@ var createCodegenConfig = (options) => {
     documents: [
       "src/server/graphql/(builder|schema).ts",
       "src/server/**/*.model.ts",
-      "src/client/gql/queries-mutations.ts"
+      "src/client/**/*.gql.ts"
     ],
     ignoreNoDocuments: true,
     generates: {

@@ -16,7 +16,7 @@ const createCodegenConfig = (options?: Partial<CodegenConfig>): CodegenConfig =>
     documents: [
       'src/server/graphql/(builder|schema).ts',
       'src/server/**/*.model.ts',
-      'src/client/gql/queries-mutations.ts',
+      'src/client/**/*.gql.ts',
     ],
     ignoreNoDocuments: true, // for better experience with the watcher
     generates: {
