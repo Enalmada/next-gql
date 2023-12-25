@@ -12,6 +12,7 @@ export interface YogaConfiguration<TUser = unknown, TPubSubChannels extends PubS
     handleCreateOrGetUser?: (req: Request) => Promise<TUser | null>;
     pubSubOverride?: PubSub<TPubSubChannels>;
     pubSubConfig?: ChannelPubSubConfig<TPubSubChannels> | undefined;
+    graphQLArmorConfig?: any;
 }
 export declare function makeServer<TUser, TPubSubChannels extends PubSubPublishArgsByKey = Record<string, never>>(config: YogaConfiguration<TUser, TPubSubChannels>): YogaServerInstance<Record<string, any>, YogaContext<TUser, TPubSubChannels>>;
 export {};

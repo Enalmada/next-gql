@@ -36,6 +36,7 @@ export interface YogaConfiguration<
   handleCreateOrGetUser?: (req: Request) => Promise<TUser | null>;
   pubSubOverride?: PubSub<TPubSubChannels>;
   pubSubConfig?: ChannelPubSubConfig<TPubSubChannels> | undefined;
+  graphQLArmorConfig?: any;
 }
 
 export function makeServer<
@@ -44,7 +45,14 @@ export function makeServer<
 >(
   config: YogaConfiguration<TUser, TPubSubChannels>
 ): YogaServerInstance<Record<string, any>, YogaContext<TUser, TPubSubChannels>> {
-  const { handleCreateOrGetUser, logError, pubSubOverride, pubSubConfig, ...yogaOptions } = config;
+  const {
+    handleCreateOrGetUser,
+    logError,
+    pubSubOverride,
+    pubSubConfig,
+    graphQLArmorConfig,
+    ...yogaOptions
+  } = config;
 
   const pubSub = createPubSub<TPubSubChannels>(pubSubConfig);
 
@@ -61,7 +69,13 @@ export function makeServer<
         throw new Error('No user resolution handler provided.');
       },
     }),
-    EnvelopArmorPlugin(),
+    EnvelopArmorPlugin({
+      // Avoid "Query depth limit of 6 exceeded, found 7." error in current structure
+      maxDepth: {
+        flattenFragments: true,
+      },
+      ...graphQLArmorConfig,
+    }),
     serverUseAPQ(),
   ];
 

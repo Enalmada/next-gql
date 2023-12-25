@@ -11,7 +11,14 @@ createYoga,
 maskError
 } from "graphql-yoga";
 function makeServer(config) {
-  const { handleCreateOrGetUser, logError, pubSubOverride, pubSubConfig, ...yogaOptions } = config;
+  const {
+    handleCreateOrGetUser,
+    logError,
+    pubSubOverride,
+    pubSubConfig,
+    graphQLArmorConfig,
+    ...yogaOptions
+  } = config;
   const pubSub = createPubSub(pubSubConfig);
   const defaultPlugins = [
     serverUseCSRFPrevention({
@@ -26,7 +33,12 @@ function makeServer(config) {
         throw new Error("No user resolution handler provided.");
       }
     }),
-    EnvelopArmorPlugin(),
+    EnvelopArmorPlugin({
+      maxDepth: {
+        flattenFragments: true
+      },
+      ...graphQLArmorConfig
+    }),
     serverUseAPQ()
   ];
   return createYoga({
