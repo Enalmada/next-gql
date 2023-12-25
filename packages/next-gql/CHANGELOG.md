@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.1.1
+
+### Patch Changes
+
+- e0a4b65: flatten fragments in depth count
+
 ## 0.1.0
 
 ### Minor Changes
