@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.1.2
+
+### Patch Changes
+
+- 8392beb: fix jsxDev issue with Bun build
+
 ## 0.1.1
 
 ### Patch Changes

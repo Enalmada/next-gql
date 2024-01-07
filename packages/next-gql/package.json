@@ -1,6 +1,6 @@
 {
   "name": "@enalmada/next-gql",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "build": "turbo build:clear build:script build:declaration",
     "build:clear": "rm -rf dist",
