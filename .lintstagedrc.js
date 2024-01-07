@@ -6,6 +6,7 @@ const buildEslintCommand = (filenames) =>
     `eslint --fix ${filenames.map((f) => path.relative(process.cwd(), f)).join(' ')}`;
 
 export default {
-    '**/*.{ts,tsx,mjs,cjs}': [buildEslintCommand, tsc],
+    '**/*.{ts,tsx,mjs,cjs}': [buildEslintCommand],
+    '**/*.{ts,tsx}': [tsc],
     './package.json': ['npm pkg fix', 'fixpack'],
 };

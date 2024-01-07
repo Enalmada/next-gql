@@ -1,7 +1,7 @@
 'use client';
 
-// src/client/urql/UrqlWrapper.tsx
-import {useMemo} from "react";
+// urqlclient/urql/UrqlWrapper.tsx
+import React, {useMemo} from "react";
 import {yogaExchange} from "@graphql-yoga/urql-exchange";
 import {authExchange} from "@urql/exchange-auth";
 import {
@@ -44,16 +44,12 @@ function UrqlWrapper(props) {
     });
     return [client2, ssr2];
   }, [isLoggedIn]);
-  return jsxDEV(UrqlProvider, {
+  return React.createElement(UrqlProvider, {
     client,
     ssr,
-    nonce,
-    children
-  }, undefined, false, undefined, this);
+    nonce
+  }, children);
 }
-import {
-jsxDEV
-} from "react/jsx-dev-runtime";
 
 var createAuth = (cookie) => {
   return authExchange(async (utilities) => {
