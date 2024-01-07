@@ -10,3 +10,5 @@ tmp
 **/package-lock.json
 **/*.tgz
 .vercel
+
+.turbo
