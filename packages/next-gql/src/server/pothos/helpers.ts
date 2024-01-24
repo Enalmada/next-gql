@@ -7,6 +7,10 @@ import { DateTimeResolver, JSONResolver, NonEmptyStringResolver } from 'graphql-
 
 export interface DefaultScalars {
   Scalars: {
+    ID: {
+      Input: string;
+      Output: string;
+    };
     DateTime: {
       Input: Date;
       Output: Date;
