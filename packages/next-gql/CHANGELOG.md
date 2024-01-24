@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.1.3
+
+### Patch Changes
+
+- ac2fa5a: id type to string
+
 ## 0.1.2
 
 ### Patch Changes
