@@ -27,7 +27,7 @@
     "@urql/exchange-graphcache": "^6.4.0",
     "@urql/exchange-persisted": "^4.1.1",
     "@urql/next": "1.1.1",
-    "graphql-scalars": "1.22.4",
+    "graphql-scalars": "1.22.5",
     "graphql-yoga": "^5.1.1",
     "urql": "^4.0.6"
   },
