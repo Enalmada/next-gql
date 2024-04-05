@@ -13,7 +13,7 @@
     "@ianvs/prettier-plugin-sort-imports": "4.2.1",
     "@scaleway/changesets-renovate": "2.0.1",
     "@types/bun": "1.0.12",
-    "@types/node": "20.12.2",
+    "@types/node": "20.12.3",
     "@types/react": "18.2.74",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
