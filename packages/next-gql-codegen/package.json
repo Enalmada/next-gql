@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@graphql-codegen/cli": "5.0.2",
-    "@graphql-codegen/client-preset": "4.2.5",
+    "@graphql-codegen/client-preset": "4.2.6",
     "@graphql-codegen/client-preset-swc-plugin": "0.2.0",
     "@graphql-codegen/schema-ast": "4.0.2",
     "@graphql-codegen/urql-introspection": "3.0.0"
