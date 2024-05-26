@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@envelop/generic-auth": "^7.0.0",
-    "@escape.tech/graphql-armor": "^2.4.0",
+    "@escape.tech/graphql-armor": "^3.0.0",
     "@graphql-yoga/plugin-apq": "^3.1.1",
     "@graphql-yoga/plugin-csrf-prevention": "^3.1.1",
     "@graphql-yoga/subscription": "^5.0.0",
