@@ -24,7 +24,7 @@
     "@pothos/plugin-with-input": "3.10.2",
     "@urql/core": "^5.0.0",
     "@urql/exchange-auth": "^2.1.6",
-    "@urql/exchange-graphcache": "^6.4.0",
+    "@urql/exchange-graphcache": "^7.0.0",
     "@urql/exchange-persisted": "^4.1.1",
     "@urql/next": "1.1.1",
     "graphql-scalars": "1.23.0",
