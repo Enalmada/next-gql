@@ -10,7 +10,7 @@
   "dependencies": {},
   "devDependencies": {
     "@changesets/cli": "2.27.7",
-    "@ianvs/prettier-plugin-sort-imports": "4.3.0",
+    "@ianvs/prettier-plugin-sort-imports": "4.3.1",
     "@scaleway/changesets-renovate": "2.0.5",
     "@types/bun": "1.1.6",
     "@types/node": "20.14.10",
