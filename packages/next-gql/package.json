@@ -21,7 +21,7 @@
     "@graphql-yoga/subscription": "^5.0.0",
     "@graphql-yoga/urql-exchange": "^3.1.1",
     "@pothos/core": "4.0.2",
-    "@pothos/plugin-with-input": "4.0.0",
+    "@pothos/plugin-with-input": "4.0.2",
     "@urql/core": "^5.0.0",
     "@urql/exchange-auth": "^2.1.6",
     "@urql/exchange-graphcache": "^6.4.0",
