@@ -144,7 +144,9 @@ export function makeServer<
                   },
                 });
 
-                logError && logError(error?.message || message);
+                if (logError) {
+                  logError(error?.message || message);
+                }
 
                 return maskError(newError, message, isDev);
               }

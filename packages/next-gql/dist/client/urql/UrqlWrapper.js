@@ -1,16 +1,36 @@
 'use client';
 
-// urqlclient/urql/UrqlWrapper.tsx
-import React, {useMemo} from "react";
-import {yogaExchange} from "@graphql-yoga/urql-exchange";
-import {authExchange} from "@urql/exchange-auth";
+// src/client/urql/UrqlWrapper.tsx
+import React, { useMemo } from "react";
+import { yogaExchange } from "@graphql-yoga/urql-exchange";
+import { authExchange } from "@urql/exchange-auth";
 import {
-cacheExchange,
-createClient,
-fetchExchange,
-ssrExchange,
-UrqlProvider
+  cacheExchange,
+  createClient,
+  fetchExchange,
+  ssrExchange,
+  UrqlProvider
 } from "@urql/next";
+
+var createAuth = (cookie) => {
+  return authExchange(async (utilities) => {
+    return {
+      addAuthToOperation(operation) {
+        const isSSR = typeof window === "undefined";
+        if (!isSSR || !cookie)
+          return operation;
+        return utilities.appendHeaders(operation, {
+          cookie
+        });
+      },
+      didAuthError(error) {
+        return error.graphQLErrors.some((e) => e.extensions?.code === "UNAUTHORIZED");
+      },
+      refreshAuth: async () => {
+      }
+    };
+  });
+};
 function UrqlWrapper(props) {
   const {
     url,
@@ -44,32 +64,12 @@ function UrqlWrapper(props) {
     });
     return [client2, ssr2];
   }, [isLoggedIn]);
-  return React.createElement(UrqlProvider, {
+  return /* @__PURE__ */ React.createElement(UrqlProvider, {
     client,
     ssr,
     nonce
   }, children);
 }
-
-var createAuth = (cookie) => {
-  return authExchange(async (utilities) => {
-    return {
-      addAuthToOperation(operation) {
-        const isSSR = typeof window === "undefined";
-        if (!isSSR || !cookie)
-          return operation;
-        return utilities.appendHeaders(operation, {
-          cookie
-        });
-      },
-      didAuthError(error) {
-        return error.graphQLErrors.some((e) => e.extensions?.code === "UNAUTHORIZED");
-      },
-      refreshAuth: async () => {
-      }
-    };
-  });
-};
 export {
   UrqlWrapper
 };

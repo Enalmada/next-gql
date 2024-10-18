@@ -20,7 +20,7 @@ import { type IntrospectionObjectType } from 'graphql/utilities';
 // whitelist every paginated page ever made.
 // https://formidable.com/open-source/urql/docs/graphcache/cache-updates/#updating-many-unknown-links
 
-export interface CacheExchangeOptions extends CacheExchangeOpts {}
+export type CacheExchangeOptions = CacheExchangeOpts;
 
 function getTypeNames(schema: any): string[] {
   return schema.__schema.types

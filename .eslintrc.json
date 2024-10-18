@@ -30,14 +30,6 @@
         "fixStyle": "inline-type-imports"
       }
     ],
-    "@typescript-eslint/quotes": [
-      "error",
-      "single",
-      {
-        "avoidEscape": true,
-        "allowTemplateLiterals": true
-      }
-    ],
     "object-curly-spacing": ["error", "always"],
     "no-console": ["error", { "allow": ["warn", "error"] }]
   },
