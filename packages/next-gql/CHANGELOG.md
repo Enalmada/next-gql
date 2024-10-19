@@ -1,5 +1,15 @@
 # @enalmada/next-gql
 
+## 0.2.0
+
+### Minor Changes
+
+- 2cb0688: migrate from eslint to biome
+
+### Patch Changes
+
+- 2cb0688: dependency updates
+
 ## 0.1.3
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @enalmada/next-gql-codegen
 
+## 0.2.0
+
+### Minor Changes
+
+- 2cb0688: migrate from eslint to biome
+- 2cb0688: support windows paths
+
+### Patch Changes
+
+- 2cb0688: dependency updates
+
 ## 0.1.0
 
 ### Minor Changes
