@@ -23,6 +23,6 @@ export interface DefaultScalars {
     };
 }
 export declare const defaultBuilderOptions: {
-    plugins: "withInput"[];
+    plugins: string[];
 };
 export declare function initializeBuilder(builder: PothosSchemaTypes.SchemaBuilder<PothosSchemaTypes.ExtendDefaultTypes<any>>): void;

@@ -1,14 +1,14 @@
 // src/server/yoga/yoga.ts
-import {useGenericAuth as serverUseGenericAuth} from "@envelop/generic-auth";
-import {EnvelopArmorPlugin} from "@escape.tech/graphql-armor";
-import {useAPQ as serverUseAPQ} from "@graphql-yoga/plugin-apq";
-import {useCSRFPrevention as serverUseCSRFPrevention} from "@graphql-yoga/plugin-csrf-prevention";
-import {initContextCache} from "@pothos/core";
-import {GraphQLError} from "graphql";
+import { useGenericAuth as serverUseGenericAuth } from "@envelop/generic-auth";
+import { EnvelopArmorPlugin } from "@escape.tech/graphql-armor";
+import { useAPQ as serverUseAPQ } from "@graphql-yoga/plugin-apq";
+import { useCSRFPrevention as serverUseCSRFPrevention } from "@graphql-yoga/plugin-csrf-prevention";
+import { initContextCache } from "@pothos/core";
+import { GraphQLError } from "graphql";
 import {
-createPubSub,
-createYoga,
-maskError
+  createPubSub,
+  createYoga,
+  maskError
 } from "graphql-yoga";
 function makeServer(config) {
   const {
@@ -44,7 +44,9 @@ function makeServer(config) {
   return createYoga({
     plugins: defaultPlugins,
     batching: true,
-    context: ({ request }) => ({
+    context: ({
+      request
+    }) => ({
       ...initContextCache(),
       pubSub: pubSubOverride || pubSub
     }),
@@ -88,7 +90,9 @@ function makeServer(config) {
               http: { status: 500 }
             }
           });
-          logError && logError(error?.message || message);
+          if (logError) {
+            logError(error?.message || message);
+          }
           return maskError(newError, message, isDev);
         }
         return maskError(error, message, isDev);

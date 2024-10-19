@@ -1,6 +1,13 @@
 // src/server/pothos/helpers.ts
 import WithInputPlugin from "@pothos/plugin-with-input";
-import {DateTimeResolver, JSONResolver, NonEmptyStringResolver} from "graphql-scalars";
+import {
+  DateTimeResolver,
+  JSONResolver,
+  NonEmptyStringResolver
+} from "graphql-scalars";
+var defaultBuilderOptions = {
+  plugins: [WithInputPlugin]
+};
 function initializeBuilder(builder) {
   builder.addScalarType("DateTime", DateTimeResolver, {});
   builder.addScalarType("JSON", JSONResolver, {});
@@ -20,9 +27,6 @@ function initializeBuilder(builder) {
     description: "The query subscription type."
   });
 }
-var defaultBuilderOptions = {
-  plugins: [WithInputPlugin]
-};
 export {
   initializeBuilder,
   defaultBuilderOptions

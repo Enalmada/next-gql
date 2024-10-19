@@ -1,4 +1,4 @@
-import { gql as originalGql } from '@urql/core';
+import { gql as originalGql } from "@urql/core";
 
 const gql = originalGql;
 

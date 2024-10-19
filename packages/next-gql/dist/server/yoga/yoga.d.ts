@@ -1,5 +1,5 @@
-import { type ChannelPubSubConfig } from '@graphql-yoga/subscription/typings/create-pub-sub';
-import { type PubSub, type YogaServerInstance, type YogaServerOptions } from 'graphql-yoga';
+import type { ChannelPubSubConfig } from "@graphql-yoga/subscription/typings/create-pub-sub";
+import { type PubSub, type YogaServerInstance, type YogaServerOptions } from "graphql-yoga";
 type PubSubPublishArgsByKey = {
     [key: string]: [] | [any] | [number | string, any];
 };

@@ -2,12 +2,13 @@
 
 // src/client/urql/cacheExchange.ts
 import {
-cacheExchange
+  cacheExchange
 } from "@urql/exchange-graphcache";
-var getTypeNames = function(schema) {
+
+function getTypeNames(schema) {
   return schema.__schema.types.filter((type) => type.kind === "OBJECT").filter((type) => !["Query", "Mutation"].includes(type.name)).map((type) => type.name);
-};
-var generateKeys = function(schema, typeNames) {
+}
+function generateKeys(schema, typeNames) {
   const keys = {};
   typeNames.forEach((typeName) => {
     const type = schema.__schema.types.find((t) => t.name === typeName);
@@ -16,7 +17,7 @@ var generateKeys = function(schema, typeNames) {
     }
   });
   return keys;
-};
+}
 function createCacheExchange(options) {
   const { schema, ...remainingOptions } = options;
   const typeNames = getTypeNames(schema);
@@ -27,7 +28,6 @@ function createCacheExchange(options) {
     ...remainingOptions
   });
 }
-
 export {
   createCacheExchange
 };

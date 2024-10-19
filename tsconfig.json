@@ -1,24 +1,24 @@
 {
-  "compilerOptions": {
-    "module": "ES2022",
-    "moduleResolution": "node",
-    "target": "ES2022",
-    "lib": ["ES2022"],
-    "types": ["vitest/globals"],
+	"compilerOptions": {
+		"module": "ES2022",
+		"moduleResolution": "node",
+		"target": "ES2022",
+		"lib": ["ES2022"],
+		"types": ["vitest/globals"],
 
-    "declaration": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "noUnusedLocals": true,
-    "noImplicitAny": true,
-    "resolveJsonModule": true,
-    "jsx": "react",
+		"declaration": true,
+		"allowJs": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"noUnusedLocals": true,
+		"noImplicitAny": true,
+		"resolveJsonModule": true,
+		"jsx": "react",
 
-    // best practices
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-  },
-  "exclude": ["website"]
+		// best practices
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true
+	},
+	"exclude": ["website"]
 }
