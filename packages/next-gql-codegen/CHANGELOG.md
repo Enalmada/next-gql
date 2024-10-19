@@ -1,5 +1,11 @@
 # @enalmada/next-gql-codegen
 
+## 0.2.1
+
+### Patch Changes
+
+- ae1cb6b: rollback preset due to codegen missing
+
 ## 0.2.0
 
 ### Minor Changes
