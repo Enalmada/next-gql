@@ -1,16 +1,13 @@
 {
-  "extends": "./tsconfig.json",
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.mjs",
-    "**/*.cjs",
-    "vitest.config.ts",
-    "build.ts",
-    "prependClientDirective.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+	"extends": "./tsconfig.json",
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"**/*.mjs",
+		"**/*.cjs",
+		"vitest.config.ts",
+		"build.ts",
+		"prependClientDirective.ts"
+	],
+	"exclude": ["dist", "node_modules"]
 }

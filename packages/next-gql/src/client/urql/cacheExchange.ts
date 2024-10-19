@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-return */
-'use client';
+"use client";
 
 import {
-  cacheExchange,
-  type Cache,
-  type CacheExchangeOpts,
-  type Data,
-} from '@urql/exchange-graphcache';
-import { type Exchange } from '@urql/next';
-import { type IntrospectionObjectType } from 'graphql/utilities';
+	type Cache,
+	type CacheExchangeOpts,
+	type Data,
+	cacheExchange,
+} from "@urql/exchange-graphcache";
+import type { Exchange } from "@urql/next";
+import type { IntrospectionObjectType } from "graphql/utilities";
 
 // Urql will console warn this for any entities that don't return id:
 //   Invalid key: The GraphQL query at the field at `...` has a selection set, but no key could be generated for the data at this field.
@@ -22,41 +22,53 @@ import { type IntrospectionObjectType } from 'graphql/utilities';
 
 export type CacheExchangeOptions = CacheExchangeOpts;
 
+// biome-ignore lint/suspicious/noExplicitAny: TBD
 function getTypeNames(schema: any): string[] {
-  return schema.__schema.types
-    .filter((type: IntrospectionObjectType) => type.kind === 'OBJECT')
-    .filter((type: IntrospectionObjectType) => !['Query', 'Mutation'].includes(type.name))
-    .map((type: IntrospectionObjectType) => type.name);
+	return schema.__schema.types
+		.filter((type: IntrospectionObjectType) => type.kind === "OBJECT")
+		.filter(
+			(type: IntrospectionObjectType) =>
+				!["Query", "Mutation"].includes(type.name),
+		)
+		.map((type: IntrospectionObjectType) => type.name);
 }
 
 function generateKeys(
-  schema: any,
-  typeNames: string[]
+	// biome-ignore lint/suspicious/noExplicitAny: TBD
+	schema: any,
+	typeNames: string[],
 ): Record<string, (data: Data) => string | null> {
-  const keys: Record<string, (data: Data) => string | null> = {};
+	const keys: Record<string, (data: Data) => string | null> = {};
 
-  typeNames.forEach((typeName) => {
-    const type = schema.__schema.types.find((t: IntrospectionObjectType) => t.name === typeName);
+	// biome-ignore lint/complexity/noForEach: TBD
+	typeNames.forEach((typeName) => {
+		const type = schema.__schema.types.find(
+			(t: IntrospectionObjectType) => t.name === typeName,
+		);
 
-    if (type && !type.fields.some((field: any) => ['id', '_id'].includes(field.name))) {
-      keys[typeName] = () => null;
-    }
-  });
+		if (
+			type &&
+			// biome-ignore lint/suspicious/noExplicitAny: TBD
+			!type.fields.some((field: any) => ["id", "_id"].includes(field.name))
+		) {
+			keys[typeName] = () => null;
+		}
+	});
 
-  return keys;
+	return keys;
 }
 
 export function createCacheExchange(options: CacheExchangeOptions): Exchange {
-  const { schema, ...remainingOptions } = options;
+	const { schema, ...remainingOptions } = options;
 
-  const typeNames = getTypeNames(schema);
-  const keys = generateKeys(schema, typeNames);
+	const typeNames = getTypeNames(schema);
+	const keys = generateKeys(schema, typeNames);
 
-  return cacheExchange({
-    schema,
-    keys,
-    ...remainingOptions,
-  });
+	return cacheExchange({
+		schema,
+		keys,
+		...remainingOptions,
+	});
 }
 
-export { type Cache };
+export type { Cache };

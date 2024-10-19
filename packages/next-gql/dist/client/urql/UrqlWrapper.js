@@ -1,16 +1,16 @@
 'use client';
 
 // src/client/urql/UrqlWrapper.tsx
-import React, { useMemo } from "react";
 import { yogaExchange } from "@graphql-yoga/urql-exchange";
 import { authExchange } from "@urql/exchange-auth";
 import {
+  UrqlProvider,
   cacheExchange,
   createClient,
   fetchExchange,
-  ssrExchange,
-  UrqlProvider
+  ssrExchange
 } from "@urql/next";
+import React, { useMemo } from "react";
 
 var createAuth = (cookie) => {
   return authExchange(async (utilities) => {

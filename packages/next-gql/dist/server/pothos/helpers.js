@@ -1,6 +1,10 @@
 // src/server/pothos/helpers.ts
 import WithInputPlugin from "@pothos/plugin-with-input";
-import { DateTimeResolver, JSONResolver, NonEmptyStringResolver } from "graphql-scalars";
+import {
+  DateTimeResolver,
+  JSONResolver,
+  NonEmptyStringResolver
+} from "graphql-scalars";
 var defaultBuilderOptions = {
   plugins: [WithInputPlugin]
 };

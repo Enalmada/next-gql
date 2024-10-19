@@ -2,62 +2,72 @@
 
 // https://pothos-graphql.dev/docs/plugins/prisma
 // https://www.prisma.io/blog/e2e-type-safety-graphql-react-3-fbV2ZVIGWg#define-a-date-scalar-type
-import WithInputPlugin from '@pothos/plugin-with-input';
-import { DateTimeResolver, JSONResolver, NonEmptyStringResolver } from 'graphql-scalars';
+import WithInputPlugin from "@pothos/plugin-with-input";
+import {
+	DateTimeResolver,
+	JSONResolver,
+	NonEmptyStringResolver,
+} from "graphql-scalars";
 
 export interface DefaultScalars {
-  Scalars: {
-    ID: {
-      Input: string;
-      Output: string;
-    };
-    DateTime: {
-      Input: Date;
-      Output: Date;
-    };
-    JSON: {
-      Input: unknown;
-      Output: unknown;
-    };
-    NonEmptyString: {
-      Input: string;
-      Output: string;
-    };
-    File: {
-      Input: File;
-      Output: never;
-    };
-  };
+	Scalars: {
+		ID: {
+			Input: string;
+			Output: string;
+		};
+		DateTime: {
+			Input: Date;
+			Output: Date;
+		};
+		JSON: {
+			Input: unknown;
+			Output: unknown;
+		};
+		NonEmptyString: {
+			Input: string;
+			Output: string;
+		};
+		File: {
+			Input: File;
+			Output: never;
+		};
+	};
 }
 
 export const defaultBuilderOptions = {
-  plugins: [WithInputPlugin],
+	plugins: [WithInputPlugin],
 };
 
 export function initializeBuilder(
-  builder: PothosSchemaTypes.SchemaBuilder<PothosSchemaTypes.ExtendDefaultTypes<any>>
+	builder: PothosSchemaTypes.SchemaBuilder<
+		// biome-ignore lint/suspicious/noExplicitAny: TBD
+		PothosSchemaTypes.ExtendDefaultTypes<any>
+	>,
 ): void {
-  builder.addScalarType('DateTime' as any, DateTimeResolver, {});
-  builder.addScalarType('JSON' as any, JSONResolver, {});
-  builder.addScalarType('NonEmptyString' as any, NonEmptyStringResolver, {});
+	// biome-ignore lint/suspicious/noExplicitAny: TBD
+	builder.addScalarType("DateTime" as any, DateTimeResolver, {});
+	// biome-ignore lint/suspicious/noExplicitAny: TBD
+	builder.addScalarType("JSON" as any, JSONResolver, {});
+	// biome-ignore lint/suspicious/noExplicitAny: TBD
+	builder.addScalarType("NonEmptyString" as any, NonEmptyStringResolver, {});
 
-  builder.scalarType('File', {
-    serialize: () => {
-      throw new Error('Uploads can only be used as input types');
-    },
-  });
+	builder.scalarType("File", {
+		serialize: () => {
+			throw new Error("Uploads can only be used as input types");
+		},
+	});
 
-  builder.queryType({
-    description: 'The query root type.',
-  });
+	builder.queryType({
+		description: "The query root type.",
+	});
 
-  builder.mutationType({
-    description: 'The query mutation type.',
-  });
+	builder.mutationType({
+		description: "The query mutation type.",
+	});
 
-  builder.subscriptionType({
-    description: 'The query subscription type.',
-  });
+	builder.subscriptionType({
+		description: "The query subscription type.",
+	});
 }
 
 // Complexity taken care of by armor. Use here if not there

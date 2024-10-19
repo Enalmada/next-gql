@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 // src/codegen/graphql-codegen-wrapper.ts
-import { execSync } from "child_process";
-import { platform } from "os";
-import path from "path";
+import { execSync } from "node:child_process";
+import { platform } from "node:os";
+import path from "node:path";
 var currentDir = path.dirname(new URL(import.meta.url).pathname);
 var codegenPath = path.join(currentDir, "../../../../.bin/graphql-codegen");
 if (platform() === "win32") {

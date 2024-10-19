@@ -1,12 +1,11 @@
-import path from 'path';
+import path from "node:path";
 
-const tsc = () => `bun --bun tsc --noEmit`;
+const tsc = () => "bun --bun tsc --noEmit";
 
-const buildEslintCommand = (filenames) =>
-    `eslint --fix ${filenames.map((f) => path.relative(process.cwd(), f)).join(' ')}`;
+const buildLintCommand = (filenames) => "biome check --fix --unsafe";
 
 export default {
-    '**/*.{ts,tsx,mjs,cjs}': [buildEslintCommand],
-    '**/*.{ts,tsx}': [tsc],
-    // './package.json': ['npm pkg fix', 'fixpack'],
+	"**/*.{ts,tsx,mjs,cjs}": [buildLintCommand],
+	"**/*.{ts,tsx}": [tsc],
+	// './package.json': ['npm pkg fix', 'fixpack'],
 };

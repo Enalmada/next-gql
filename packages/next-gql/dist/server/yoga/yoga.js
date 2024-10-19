@@ -44,7 +44,9 @@ function makeServer(config) {
   return createYoga({
     plugins: defaultPlugins,
     batching: true,
-    context: ({ request }) => ({
+    context: ({
+      request
+    }) => ({
       ...initContextCache(),
       pubSub: pubSubOverride || pubSub
     }),

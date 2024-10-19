@@ -1,35 +1,37 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "tasks": {
-    "build:clear": {
-      "cache": false
-    },
-    "build:declaration": {
-      "dependsOn": ["build:script"],
-      "outputs": ["dist/**"]
-    },
-    "build:script": {
-      "dependsOn": ["build:clear"],
-      "outputs": ["dist/**"]
-    },
-    "test": {
-      "inputs": ["src/**/*.tsx", "src/**/*.ts"]
-    },
-    "test:unit": {
-      "inputs": ["src/**/*.tsx", "src/**/*.ts"]
-    },
-    "lint": {
-    },
-    "lint:fix": {
-      "inputs": ["src/**/*.tsx", "src/**/*.ts"]
-    },
-    "build:pack": {
-      "inputs": ["src/**/*.tsx", "src/**/*.ts"],
-      "outputs": ["dist/**"]
-    },
-    "type-check": {},
-    "dev:install": {
-      "inputs": ["package.json", "bun.lockb"]
-    }
-  }
+	"$schema": "https://turbo.build/schema.json",
+	"tasks": {
+		"build": {
+			"cache": false
+		},
+		"build:clear": {
+			"cache": false
+		},
+		"build:declaration": {
+			"dependsOn": ["build:script"],
+			"outputs": ["dist/**"]
+		},
+		"build:script": {
+			"dependsOn": ["build:clear"],
+			"outputs": ["dist/**"]
+		},
+		"test": {
+			"inputs": ["src/**/*.tsx", "src/**/*.ts"]
+		},
+		"test:unit": {
+			"inputs": ["src/**/*.tsx", "src/**/*.ts"]
+		},
+		"lint": {},
+		"lint:fix": {
+			"inputs": ["src/**/*.tsx", "src/**/*.ts"]
+		},
+		"build:pack": {
+			"inputs": ["src/**/*.tsx", "src/**/*.ts"],
+			"outputs": ["dist/**"]
+		},
+		"type-check": {},
+		"dev:install": {
+			"inputs": ["package.json", "bun.lockb"]
+		}
+	}
 }

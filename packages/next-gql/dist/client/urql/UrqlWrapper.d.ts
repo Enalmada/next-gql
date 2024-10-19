@@ -1,5 +1,5 @@
-import React, { type ReactNode } from 'react';
-import { type ClientOptions, type Exchange } from '@urql/next';
+import { type ClientOptions, type Exchange } from "@urql/next";
+import React, { type ReactNode } from "react";
 interface UrqlWrapperProps extends Partial<ClientOptions> {
     url: string;
     isLoggedIn: boolean;
