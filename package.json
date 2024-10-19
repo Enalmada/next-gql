@@ -3,12 +3,12 @@
 	"version": "0.0.0",
 	"scripts": {
 		"build": "turbo build",
+		"build:pack": "turbo build:pack",
 		"dev:website": "cd website && bun run dev",
+		"lint": "biome check --fix --unsafe",
 		"pre-commit": "bun lint-staged",
 		"prepare": "husky",
-		"release": "bunx changeset publish",
-		"lint": "biome check --fix --unsafe",
-		"build:pack": "turbo build:pack"
+		"release": "bunx changeset publish"
 	},
 	"dependencies": {},
 	"devDependencies": {
@@ -43,6 +43,6 @@
 	"homepage": "https://github.com/Enalmada/next-gql",
 	"private": true,
 	"type": "module",
-	"workspaces": ["packages/*"],
-	"packageManager": "bun@1.1.31"
+	"packageManager": "bun@1.1.31",
+	"workspaces": ["packages/*"]
 }

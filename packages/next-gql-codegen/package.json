@@ -2,9 +2,11 @@
 	"name": "@enalmada/next-gql-codegen",
 	"version": "0.1.0",
 	"scripts": {
-		"build": "rm -rf dist && bun build.ts && bun run build:declaration",
+		"build": "bun build:clear && bun build:script && bun build:declaration",
+		"build:clear": "rm -rf dist",
 		"build:declaration": "tsc --emitDeclarationOnly",
 		"build:pack": "bun run build && npm pack",
+		"build:script": "cross-env NODE_ENV=production bun build.ts",
 		"lint": "eslint . --ext .ts,.tsx,.cjs,.mjs && bun type-check",
 		"lint:fix": "eslint . --fix --ext .ts,.tsx,.cjs,.mjs && bun type-check",
 		"test": "bun run test:unit",
