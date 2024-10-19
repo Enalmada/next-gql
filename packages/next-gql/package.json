@@ -1,6 +1,6 @@
 {
 	"name": "@enalmada/next-gql",
-	"version": "0.1.3",
+	"version": "0.2.0",
 	"scripts": {
 		"build": "bun build:clear && bun build:script && bun build:declaration",
 		"build:clear": "rm -rf dist",
