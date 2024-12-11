@@ -98,7 +98,7 @@ export function UrqlWrapper(props: UrqlWrapperProps) {
         }),
          */
 				fetchExchange,
-				yogaExchange(),
+				yogaExchange() as Exchange,
 				/*
         subscriptionExchange({
           forwardSubscription(operation) {

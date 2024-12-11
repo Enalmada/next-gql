@@ -12,7 +12,7 @@ Using [changesets](https://github.com/changesets/changesets) so please remember 
 
 ### Development Workflow
 Unfortunately bun link seems to have trouble with graphql and updating binaries.  This is the current workaround:
-In module, run 'bun lint:fix && bun run build:pack`
+In module, run 'bun lint && bun run build:pack`
 In application, run one of as applicable:
 * 'bun uninstall @enalmada/next-gql && bun install file:<path>/next-gql/packages/next-gql/enalmada-next-gql-<version>.tgz'
 * 'bun uninstall @enalmada/next-gql-codegen && bun install file:<path>/next-gql/packages/next-gql-codegen/enalmada-next-gql-codegen-<version>.tgz'
