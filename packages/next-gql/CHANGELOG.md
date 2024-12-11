@@ -1,5 +1,11 @@
 # @enalmada/next-gql
 
+## 0.2.1
+
+### Patch Changes
+
+- d1b7cb1: dependency updates
+
 ## 0.2.0
 
 ### Minor Changes

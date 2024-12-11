@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- d1b7cb1: dependency updates
+
+## 0.2.1
+
+### Patch Changes
+
 - ae1cb6b: rollback preset due to codegen missing
 
 ## 0.2.0
